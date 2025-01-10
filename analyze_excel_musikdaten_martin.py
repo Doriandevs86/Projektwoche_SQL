@@ -9,11 +9,16 @@ def analyze_excel(file_path):
 
     # Zeige alle Spaltennamen
     print("Spaltennamen:")
-    print(data.columns.tolist(), "\n")
-
+    columns = data.columns.tolist()
+    print(columns[:10])
+    print(columns[10:20])
+    print(columns[20:30])
+    print("\n")
+    
     # Zeige Informationen über die Spalten
     print("Spalteninformationen:")
     data.info()
+    print("\n")
 
     # Überprüfe, wie viele fehlende Werte (NaN, 0, 'null') es in jeder Spalte gibt
     print("Anzahl der fehlenden Werte pro Spalte (inklusive NaN, 0 und 'null'):")
