@@ -7,15 +7,29 @@ def analyze_excel(file_path):
     print("Vorschau der Daten:")
     print(data.head(), "\n")
 
-    # Zeige alle Spaltennamen
+    # Zeige alle Spaltennamen, mit Umbruch nach jeder 10. Spalte
     print("Spaltennamen:")
     columns = data.columns.tolist()
     print(columns[:10])
     print(columns[10:20])
     print(columns[20:30])
+    print(columns[30:40])
+    print(columns[40:50])
+    print(columns[50:60])
+    print(columns[60:70])
+    print(columns[70:80])
+    print(columns[80:90])
+    print(columns[90:100])
+    print(columns[100:110])
+    print(columns[110:120])
+    print(columns[120:130])
+    print(columns[130:140])
+    print(columns[140:150])
+    print(columns[150:])
+
     print("\n")
-    
-    # Zeige Informationen über die Spalten
+
+    # Zeige Informationen über die Spalten (Datentypen und nicht-leere Werte)
     print("Spalteninformationen:")
     data.info()
     print("\n")
@@ -34,5 +48,5 @@ def analyze_excel(file_path):
     print(data.describe(), "\n")
 
 # Pfad zur Excel-Datei angeben und Script ausführen
-file_path = "data/database/Musikdaten_Martin_09012025.xlsx"
+file_path = "Mappe2.xlsx"
 analyze_excel(file_path)
