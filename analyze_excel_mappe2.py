@@ -48,5 +48,5 @@ def analyze_excel(file_path):
     print(data.describe(), "\n")
 
 # Pfad zur Excel-Datei angeben und Script ausführen
-file_path = "database/Mappe2.xlsx"
+file_path = "data/database/Mappe2.xlsx"
 analyze_excel(file_path)

@@ -34,5 +34,5 @@ def analyze_excel(file_path):
     print(data.describe(), "\n")
 
 # Pfad zur Excel-Datei angeben und Script ausführen
-file_path = "database/Musikdaten_Martin_09012025.xlsx"
+file_path = "data/database/Musikdaten_Martin_09012025.xlsx"
 analyze_excel(file_path)
