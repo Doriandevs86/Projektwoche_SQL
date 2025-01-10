@@ -1,6 +1,6 @@
 # IntelliJ/PyCharm project settings
 .idea/
-musikdaten.db
+src/database/musikdaten.db
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
