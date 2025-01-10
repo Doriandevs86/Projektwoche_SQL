@@ -25,4 +25,4 @@ def load_excel_to_database(database_name, folder_path):
 
 
 # Die Funktion aufrufen um DB zu erstellen
-load_excel_to_database("musikdaten.db", "database")
+load_excel_to_database("musikdaten.db", "data/database")
