@@ -1,46 +1,47 @@
 import customtkinter as ctk
 from PIL import Image
+from src.util.dropdown_funtionen import get_genres_from_db
+from src.util.dropdown_funtionen import get_interpreten_from_db
+from src.util.dropdown_funtionen import get_rating_from_db
 
+### Hauptfenster ###
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("./config/theme/custom.json")# Setze das Standardfarbschema
 
-# Hauptfenster
-ctk.set_appearance_mode("dark")  # Setze das Erscheinungsbild auf "dark"
-ctk.set_default_color_theme("./config/theme/custom.json")  # Setze das Standardfarbschema
 root = ctk.CTk()  # Erstelle das Hauptfenster
 root.title('Meine Musik Empfehlung')
 root.geometry('800x600')
-root.resizable(width=False, height=False)  # Fenstergröße ist fix/unveränderbar
+root.resizable(width=False, height=False)
 root.configure()
 
 
-# Hintergrundbild laden und skalieren
+### Hintergrundbild laden ###
 bild_path = r"assetes/image/SL.123119.26540.04.jpg"
 bild = Image.open(bild_path)
-
 # CTkImage erstellen und auf Fenstergröße skalieren
 hintergrundbild = ctk.CTkImage(bild, size=(800, 600))
-
 # CTkLabel für das Hintergrundbild erstellen
 label_hintergrund = ctk.CTkLabel(root, image=hintergrundbild, text="")
 label_hintergrund.place(relwidth=1, relheight=1)
 
 
+### Buttons und Menüs ###
 
 # Genre Dropdown
 genre_ver = ctk.StringVar(value="Genre")
-genres = ["Rock", "Dance/Electronic", "Latin", "Trap", "Country", "House", "Reggaeton",
-          "Boy_Band", "Bolero", "Reggae", "Jazz", "Opm"]
+genres = get_genres_from_db()
 genre_dropdown = ctk.CTkOptionMenu(root, variable=genre_ver, values=genres)
 genre_dropdown.grid(column=0, row=0, padx=20, pady=10)
 
 # Interpreten Dropdown
 interpret_ver = ctk.StringVar(value="Interpret")
-interpret = ["schreib ne for schleife", "und iteriere über die db"]
+interpret = get_interpreten_from_db()
 interpret_dropdown = ctk.CTkOptionMenu(root, variable=interpret_ver, values=interpret)
 interpret_dropdown.grid(column=0, row=1, padx=20, pady=10)
 
 # Rating Dropdown
 rating_ver = ctk.StringVar(value="Rating")
-rating = ["Rating Funktion schreiben"]
+rating = get_rating_from_db()
 rating_dropdown = ctk.CTkOptionMenu(root, variable=rating_ver,values=rating, bg_color="transparent")
 rating_dropdown.grid(column=0, row=2, padx=20, pady=10 )
 
