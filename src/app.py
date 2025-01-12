@@ -1,8 +1,8 @@
 import customtkinter as ctk
 from PIL import Image
-from src.util.dropdown_funktionen import get_genres_from_db
-from src.util.dropdown_funktionen import get_interpreten_from_db
-from src.util.dropdown_funktionen import get_rating_from_db
+from dropdown_funktionen import get_genres_from_db
+#from dropdown_funktionen import get_interpreten_from_db
+#from dropdown_funktionen import get_rating_from_db
 
 
 
@@ -38,21 +38,21 @@ genres = get_genres_from_db()
 genre_dropdown = ctk.CTkOptionMenu(root, variable=genre_ver, values=genres)
 genre_dropdown.grid(column=0, row=0, padx=20, pady=10)
 
-# Interpreten Dropdown
-interpret_ver = ctk.StringVar(value="Interpret")
-interpret = get_interpreten_from_db()
-interpret_dropdown = ctk.CTkOptionMenu(root, variable=interpret_ver, values=interpret)
-interpret_dropdown.grid(column=0, row=1, padx=20, pady=10)
-
-# Rating Dropdown
-extras_ver = ctk.StringVar(value="Extras")
-extras = ["ja", "Nein"]
-extras_dropdown = ctk.CTkOptionMenu(root, variable=extras_ver,values=extras, bg_color="transparent")
-extras_dropdown.grid(column=0, row=2, padx=20, pady=10 )
-
-# Start-Button
-start_btn = ctk.CTkButton(root, text="Start",)
-start_btn.grid(row=3, column=0, columnspan=2, padx=20, pady=10)
+# # Interpreten Dropdown
+# interpret_ver = ctk.StringVar(value="Interpret")
+# interpret = get_interpreten_from_db()
+# interpret_dropdown = ctk.CTkOptionMenu(root, variable=interpret_ver, values=interpret)
+# interpret_dropdown.grid(column=0, row=1, padx=20, pady=10)
+#
+# # Rating Dropdown
+# extras_ver = ctk.StringVar(value="Extras")
+# extras = ["ja", "Nein"]
+# extras_dropdown = ctk.CTkOptionMenu(root, variable=extras_ver,values=extras, bg_color="transparent")
+# extras_dropdown.grid(column=0, row=2, padx=20, pady=10 )
+#
+# # Start-Button
+# start_btn = ctk.CTkButton(root, text="Start",)
+# start_btn.grid(row=3, column=0, columnspan=2, padx=20, pady=10)
 
 
 root.mainloop()
