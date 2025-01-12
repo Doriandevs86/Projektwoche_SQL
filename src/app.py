@@ -51,21 +51,22 @@ sub_genre_dropdown.grid(column=0, row=1, padx=20, pady=10)
 interpret_ver = ctk.StringVar(value="Interpret")
 interpret = get_interpreten_from_db(connection=connect_to_db())
 interpret_dropdown = ctk.CTkOptionMenu(root, variable=interpret_ver, values=interpret)
-interpret_dropdown.grid(column=0, row=2, padx=20, pady=10)
+interpret_dropdown.grid(column=1, row=0, padx=20, pady=10)
 
-# # Extras Dropdown
-# extras_ver = ctk.StringVar(value="Extras")
-# extras = ["ja", "Nein"]
-# extras_dropdown = ctk.CTkOptionMenu(root, variable=extras_ver,values=extras, bg_color="transparent")
-# extras_dropdown.grid(column=0, row=3, padx=20, pady=10 )
+# Extras Dropdown
+extras_ver = ctk.StringVar(value="Extras")
+extras = ["ja", "Nein"]
+extras_dropdown = ctk.CTkOptionMenu(root, variable=extras_ver,values=extras, bg_color="transparent")
+extras_dropdown.grid(column=1, row=1, padx=20, pady=10 )
 
-#ef info():
-#   infofenster = ctk.CTkTextbox(root)
-#   infofenster.grid()
+def info():
+   infofenster = ctk.CTkTextbox(root)
+   infofenster.grid(row=6, column=1)
 
-# Start-Button
-#tart_btn = ctk.CTkButton(root, text="Start", command=info)
-#tart_btn.grid(row=4, column=0, columnspan=2, padx=20, pady=10)
+
+#Start-Button
+start_btn = ctk.CTkButton(root, text="Start", command=info)
+start_btn.grid(row=4, column=0, columnspan=2, padx=20, pady=10)
 
 
 root.mainloop()
