@@ -23,19 +23,19 @@ def connect_to_db():
         return None
 
 
-
-def get_interpreten_from_db(connection):
+def get_interpreten_from_db(connection, genre, subgenre):
     try:
         with connection.cursor() as cursor:
-            # Abfrage der einzigartigen Künstler
+            # Abfrage der Interpreten basierend auf Genre und Subgenre
             cursor.execute('''
                 SELECT DISTINCT track_artist
-                FROM "Spotifydata";
-            ''')
+                FROM "Spotifydata"
+                WHERE playlist_genre = %s AND playlist_subgenre = %s;
+            ''', (genre, subgenre))
             rows = cursor.fetchall()
             return [f"{row[0]}" for row in rows]
     except Exception as e:
-        print(f"Fehler beim Abrufen oder Verarbeiten der Künstler: {e}")
+        print(f"Fehler beim Abrufen oder Verarbeiten der Interpreten: {e}")
         return []
 
 
@@ -54,17 +54,18 @@ def get_genres_from_db(connection):
         print(f"Fehler beim Abrufen oder Verarbeiten der Künstler: {e}")
         return []
 
-def get_subgenres_from_db(connection):
+def get_subgenres_from_db(connection, genre):
     try:
         with connection.cursor() as cursor:
-            # Abfrage der einzigartigen Künstler
+            # Hole die Subgenres basierend auf dem Genre
             cursor.execute('''
                 SELECT DISTINCT playlist_subgenre
-                FROM "Spotifydata";
-            ''')
+                FROM "Spotifydata"
+                WHERE playlist_genre = %s;
+            ''', (genre,))
             rows = cursor.fetchall()
             return [f"{row[0]}" for row in rows]
     except Exception as e:
-        print(f"Fehler beim Abrufen oder Verarbeiten der Künstler: {e}")
+        print(f"Fehler beim Abrufen oder Verarbeiten der Subgenres: {e}")
         return []
 
