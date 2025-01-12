@@ -1,9 +1,7 @@
 import customtkinter as ctk
 from PIL import Image
-from customtkinter import CTkFrame
-from sqlalchemy import column
 
-from Projektwoche_SQL.src.dropdown_funktionen import connect_to_db
+from dropdown_funktionen import connect_to_db
 from dropdown_funktionen import get_genres_from_db
 from dropdown_funktionen import get_interpreten_from_db
 from dropdown_funktionen import get_subgenres_from_db
@@ -77,13 +75,12 @@ def info():
                                           '\n'
                                           ' mit allen wichtigen Infos\n'
                                           '\n'
-                                          '################################\n')
-
-   infofenster.grid(row=6, column=0, columnspan=3)
+                                          '################################')
+   infofenster.grid(row=3, column=0, columnspan=3)
 
 # Start-Button
 start_btn = ctk.CTkButton(root, text="Start", command=info)
-start_btn.grid(row=4, column=0, columnspan=2, padx=20, pady=10)
+start_btn.grid(row=2, column=0, columnspan=2, padx=20, pady=10)
 
 
 root.mainloop()
