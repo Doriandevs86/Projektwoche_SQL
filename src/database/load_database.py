@@ -45,7 +45,6 @@ def load_excel_to_postgres(database_name, host, user, password, port, excel_file
                     VALUES ({values});
                 """
                 cursor.execute(insert_query)
-
             print(
                 f"Die Datei '{file_name}' wurde erfolgreich als Tabelle '{table_name}' in die PostgreSQL-Datenbank '{database_name}' importiert.")
 
@@ -54,7 +53,6 @@ def load_excel_to_postgres(database_name, host, user, password, port, excel_file
         cursor.close()
         conn.close()
         print("Alle Daten wurden importiert und die Verbindung zur Datenbank wurde geschlossen.")
-
     except Exception as e:
         print(f"Fehler beim Importieren der Daten: {e}")
 
