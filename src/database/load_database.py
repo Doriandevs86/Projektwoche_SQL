@@ -64,5 +64,5 @@ load_excel_to_postgres(
     user="postgres",
     password="Datacraft",
     port="5432",
-    excel_files=["Mappe2.xlsx", "Musikdaten_Martin_09012025.xlsx"]
+    excel_files=["spotify_songs.csv"]
 )
