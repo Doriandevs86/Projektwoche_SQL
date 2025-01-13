@@ -1,24 +1,40 @@
 import psycopg
 import pandas as pd
+import os
+from dotenv import load_dotenv
+
+load_dotenv(r'C:\Users\Admin\Documents\Projektwoche_SQL\Projektwoche_SQL\.env')
+
+def connect_to_db():
+    try:
+        connection = psycopg.connect(
+            host=os.getenv("host"),
+            port=os.getenv("port"),
+            user=os.getenv("user"),
+            password=os.getenv("password"),
+            dbname=os.getenv("dbname"),
+            autocommit=True
+        )
+        print('Verbindung erfolgreich hergestellt')
+        return connection
+    except Exception as e:
+        print(f"Fehler beim Herstellen der Verbindung: {e}")
+        return None
 
 
-def load_excel_to_postgres(database_name, host, user, password, port, excel_files):
+def load_csv_to_postgres(csv_files):
     try:
         # Verbindung zur PostgreSQL-Datenbank herstellen
-        conn = psycopg.connect(
-                                dbname=database_name,
-                                host=host,
-                                user=user,
-                                password=password,
-                                port=port
-        )
+        conn = connect_to_db()
+        if conn is None:
+            return
+
         cursor = conn.cursor()
+        print("Erfolgreich mit der Datenbank verbunden.")
 
-        print(f"Erfolgreich mit der Datenbank '{database_name}' verbunden.")
-
-        # Durch alle Excel-Dateien iterieren
-        for file_name in excel_files:
-            df = pd.read_excel(file_name)
+        # Durch alle CSV-Dateien iterieren
+        for file_name in csv_files:
+            df = pd.read_csv(file_name)  # Ändere hier von read_excel auf read_csv
             table_name = file_name.split(".")[0]
 
             # Erstelle Tabelle, wenn sie nicht existiert
@@ -45,8 +61,7 @@ def load_excel_to_postgres(database_name, host, user, password, port, excel_file
                     VALUES ({values});
                 """
                 cursor.execute(insert_query)
-            print(
-                f"Die Datei '{file_name}' wurde erfolgreich als Tabelle '{table_name}' in die PostgreSQL-Datenbank '{database_name}' importiert.")
+            print(f"Die Datei '{file_name}' wurde erfolgreich als Tabelle '{table_name}' in die PostgreSQL-Datenbank importiert.")
 
         # Änderungen speichern und Verbindung schließen
         conn.commit()
@@ -58,11 +73,6 @@ def load_excel_to_postgres(database_name, host, user, password, port, excel_file
 
 
 # Beispielaufruf
-load_excel_to_postgres(
-    database_name="musikdaten",
-    host="localhost",
-    user="postgres",
-    password="Datacraft",
-    port="5432",
-    excel_files=["spotify_songs.csv"]
+load_csv_to_postgres(
+    csv_files=['spotify_songs.csv']
 )
