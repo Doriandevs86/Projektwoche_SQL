@@ -45,6 +45,9 @@ JOIN genre g ON s.playlist_genre = g.genre AND s.playlist_subgenre = g.subgenre;
 
 SELECT * FROM title;
 
+ALTER TABLE rating
+    alter column track_popularity TYPE TEXT;
+
 -- Daten in die Tabelle rating einfügen
 INSERT INTO rating (title_id, track_popularity)
 SELECT t.title_id, s.track_popularity
@@ -52,6 +55,12 @@ FROM spotify_songs s
 JOIN title t ON s.track_name = t.name;
 
 SELECT * FROM rating;
+
+
+ALTER TABLE rhythmic_features
+    alter column energy TYPE TEXT;
+ALTER TABLE rhythmic_features
+    alter column danceability TYPE TEXT;
 
 -- Daten in die Tabelle rhythmic_features einfügen
 INSERT INTO rhythmic_features (title_id, energy, tempo, danceability)
