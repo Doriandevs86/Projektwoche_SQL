@@ -29,8 +29,8 @@ def get_genres_from_db(connection):
         with connection.cursor() as cursor:
             # Abfrage der einzigartigen Künstler
             cursor.execute('''
-                SELECT DISTINCT playlist_genre
-                FROM "Spotifydata";
+                SELECT DISTINCT genre
+                FROM "genre";
             ''')
             rows = cursor.fetchall()
             return [f"{row[0]}" for row in rows]
@@ -44,9 +44,9 @@ def get_subgenres_from_db(connection, genre):
         with connection.cursor() as cursor:
             # Hole die Subgenres basierend auf dem Genre
             cursor.execute('''
-                SELECT DISTINCT playlist_subgenre
-                FROM "Spotifydata"
-                WHERE playlist_genre = %s;
+                SELECT DISTINCT subgenre
+                FROM "genre"
+                WHERE genre = %s;
             ''', (genre,))
             rows = cursor.fetchall()
             return [f"{row[0]}" for row in rows]
@@ -60,9 +60,11 @@ def get_interpreten_from_db(connection, genre, subgenre):
         with connection.cursor() as cursor:
             # Abfrage der Interpreten basierend auf Genre und Subgenre
             cursor.execute('''
-                SELECT DISTINCT track_artist
-                FROM "Spotifydata"
-                WHERE playlist_genre = %s AND playlist_subgenre = %s;
+                SELECT DISTINCT a.name
+                FROM "artist" a
+                INNER JOIN "title" t ON artist_id = t.artist_id
+                INNER JOIN "genre" g ON t.genre_id = genre_id
+                WHERE g.genre = %s AND g.subgenre = %s;
             ''', (genre, subgenre))
             rows = cursor.fetchall()
             return [f"{row[0]}" for row in rows]

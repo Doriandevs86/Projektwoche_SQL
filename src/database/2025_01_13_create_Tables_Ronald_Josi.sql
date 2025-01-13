@@ -59,6 +59,8 @@ CREATE TABLE IF NOT EXISTS sound_attributes (
     loudness VARCHAR(255) NOT NULL,
     FOREIGN KEY (title_id) REFERENCES title (title_id) ON DELETE CASCADE
 );
+
+
 create table if not exists additional_information(
     title_id integer not null ,
     key text,
