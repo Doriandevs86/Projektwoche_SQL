@@ -210,3 +210,7 @@ SELECT track_id, track_name, track_artist, playlist_genre,
        playlist_subgenre, track_popularity, duration_ms, danceability, loudness
 FROM spotify_songs;
 
+
+
+DROP TABLE IF EXISTS additional_information, album, artist, genre, tite CASCADE;
+
