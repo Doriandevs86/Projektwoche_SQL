@@ -176,3 +176,36 @@ ALTER TABLE album
 ALTER TABLE track_information
     ADD CONSTRAINT fk_title_id FOREIGN KEY (titel_id) REFERENCES title(title_id)
         ON DELETE CASCADE;
+
+
+
+CREATE TABLE IF NOT EXISTS songs AS
+SELECT
+    track_id,
+    track_name,
+    track_artist,
+    playlist_genre,
+    playlist_subgenre,
+    track_popularity,
+    duration_ms,
+    danceability,
+    loudness
+FROM spotify_songs
+WHERE FALSE;
+
+
+
+INSERT INTO songs (    track_id,
+    track_name,
+    track_artist,
+    playlist_genre,
+    playlist_subgenre,
+    track_popularity,
+    duration_ms,
+    danceability,
+    loudness)
+
+SELECT track_id, track_name, track_artist, playlist_genre,
+       playlist_subgenre, track_popularity, duration_ms, danceability, loudness
+FROM spotify_songs;
+
