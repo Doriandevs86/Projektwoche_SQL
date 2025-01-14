@@ -37,13 +37,16 @@ CREATE TABLE IF NOT EXISTS title (
     duration_ms TEXT
 );
 
+ALTER TABLE title ALTER COLUMN duration TYPE TEXT;
 INSERT INTO title (artist_id, genre_id, name, duration, duration_ms)
 SELECT
     a.artist_id,
     g.genre_id,
     s.track_name,
-    FLOOR(CAST(s.duration_ms AS INTEGER) / 60000) * 60 + FLOOR((CAST(s.duration_ms AS INTEGER) % 60000) / 1000),
-    CAST(s.duration_ms AS INTEGER)
+     -- Berechnung der Dauer in Minuten:Sekunden (Format: MM:SS)
+    TO_CHAR(FLOOR(CAST(s.duration_ms AS INTEGER) / 60000), 'FM00') || ':' ||
+    TO_CHAR(FLOOR((CAST(s.duration_ms AS INTEGER) % 60000) / 1000), 'FM00') AS duration,  -- Minuten:Sekunden
+    CAST(s.duration_ms AS INTEGER) AS duration_ms  -- Umwandlung von Text in Integer
 FROM spotify_songs s
 LEFT JOIN artist a ON s.track_artist = a.name
 LEFT JOIN genre g ON s.playlist_genre = g.genre AND s.playlist_subgenre = g.subgenre;
@@ -72,17 +75,16 @@ SELECT * FROM album;
 CREATE TABLE IF NOT EXISTS additional_information (
     title_id INT,
     key VARCHAR(255) NOT NULL,
-    mode VARCHAR(255) NOT NULL,
-    tempo TEXT
+    mode VARCHAR(255) NOT NULL
 );
 
-INSERT INTO additional_information (title_id, key, mode, tempo)
-SELECT t.title_id, s.key, s.mode, s.tempo
+INSERT INTO additional_information (title_id, key, mode)
+SELECT DISTINCT ON (t.title_id) t.title_id, s.key, s.mode
 FROM spotify_songs s
-JOIN title t ON s.track_name = t.name;
+JOIN title t ON s.track_name = t.name
+ORDER BY t.title_id, s.key, s.mode, s.tempo;
 
 SELECT * FROM additional_information;
-
 
 
 -- rating Tabelle erstellen und füllen
@@ -93,12 +95,11 @@ CREATE TABLE IF NOT EXISTS rating (
 );
 
 INSERT INTO rating (title_id, track_popularity)
-SELECT t.title_id, s.track_popularity
+SELECT DISTINCT ON (t.title_id) t.title_id, s.track_popularity
 FROM spotify_songs s
 JOIN title t ON s.track_name = t.name;
 
 SELECT * FROM rating;
-
 
 
 -- rhythmic_features Tabelle erstellen und füllen
@@ -110,7 +111,7 @@ CREATE TABLE IF NOT EXISTS rhythmic_features (
 );
 
 INSERT INTO rhythmic_features (title_id, energy, tempo, danceability)
-SELECT t.title_id, CAST(s.energy AS DOUBLE PRECISION), s.tempo, CAST(s.danceability AS DOUBLE PRECISION)
+SELECT DISTINCT ON (t.title_id) t.title_id, CAST(s.energy AS DOUBLE PRECISION), s.tempo, CAST(s.danceability AS DOUBLE PRECISION)
 FROM spotify_songs s
 JOIN title t ON s.track_name = t.name;
 
@@ -130,7 +131,7 @@ CREATE TABLE IF NOT EXISTS sound_attributes (
 );
 
 INSERT INTO sound_attributes (title_id, speechiness, acousticness, instrumentalness, liveness, valence, loudness)
-SELECT t.title_id, s.speechiness, s.acousticness, s.instrumentalness, s.liveness, s.valence, s.loudness
+SELECT DISTINCT ON (t.title_id) t.title_id, s.speechiness, s.acousticness, s.instrumentalness, s.liveness, s.valence, s.loudness
 FROM spotify_songs s
 JOIN title t ON s.track_name = t.name;
 
@@ -145,7 +146,7 @@ create table if not exists track_information(
 );
 
 INSERT INTO track_information (titel_id, release)
-SELECT t.title_id, s.track_album_release_date
+SELECT DISTINCT ON (t.title_id)t.title_id, s.track_album_release_date
 FROM spotify_songs s
 JOIN title t ON s.track_name = t.name;
 
