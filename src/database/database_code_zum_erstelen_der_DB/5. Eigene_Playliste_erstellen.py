@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Verbindung zur Datenbank herstellen
 def get_db_connection():
     connection = psycopg.connect(
         host=os.getenv('host'),
@@ -16,7 +15,6 @@ def get_db_connection():
     )
     return connection
 
-# Tabelle "Meine_Playlist" erstellen
 def create_playlist_table():
     connection = get_db_connection()
     try:
@@ -36,7 +34,6 @@ CREATE TABLE IF NOT EXISTS Meine_Playlist (
     finally:
         connection.close()
 
-# Funktion zum Überprüfen, ob ein Titel in "spotify_playlist" existiert
 def title_exists_in_spotify(track_name, track_artist):
     connection = get_db_connection()
     try:
@@ -53,7 +50,6 @@ def title_exists_in_spotify(track_name, track_artist):
     finally:
         connection.close()
 
-# Titel zur Playlist hinzufügen
 def add_to_playlist():
     track_name = input("Gib den Titel des Songs ein: ").strip()
     track_artist = input("Gib den Künstler des Songs ein: ").strip()
@@ -75,7 +71,6 @@ def add_to_playlist():
     finally:
         connection.close()
 
-# Titel aus der Playlist löschen
 def delete_from_playlist():
     track_name = input("Gib den Titel des Songs ein, den du löschen möchtest: ").strip()
     track_artist = input("Gib den Künstler des Songs ein, den du löschen möchtest: ").strip()
