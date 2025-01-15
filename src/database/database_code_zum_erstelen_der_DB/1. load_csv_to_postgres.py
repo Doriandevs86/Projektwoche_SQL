@@ -47,7 +47,6 @@ def load_csv_to_postgres(csv_files):
             """
             cursor.execute(create_table_query)
 
-            # Daten einfügen
             for _, row in df.iterrows():
                 # Bereinige Sonderzeichen in den Daten
                 values = [
@@ -63,7 +62,6 @@ def load_csv_to_postgres(csv_files):
                 cursor.execute(insert_query)
             print(f"Die Datei '{file_name}' wurde erfolgreich als Tabelle '{table_name}' in die PostgreSQL-Datenbank importiert.")
 
-        # Änderungen speichern und Verbindung schließen
         conn.commit()
         cursor.close()
         conn.close()

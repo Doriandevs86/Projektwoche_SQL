@@ -21,14 +21,13 @@ def create_playlist_table():
         with connection.cursor() as cursor:
             cursor.execute("""
 CREATE TABLE IF NOT EXISTS Meine_Playlist (
-                    id SERIAL PRIMARY KEY,
-                    title_id INTEGER,
+                    title_id SERIAL PRIMARY KEY,
                     track_name VARCHAR(255),
                     track_artist VARCHAR(255),
-                    FOREIGN KEY (title_id) REFERENCES title (titel_id) ON DELETE CASCADE
+                    FOREIGN KEY (title_id) REFERENCES title (title_id) ON DELETE CASCADE
                 );
             """)
-            print("Die Tabelle 'Meine_Playlist' wurde erstellt (falls sie nicht bereits existierte).")
+            print("Die Tabelle 'Meine_Playlist' wurde erstellt.")
     except Exception as e:
         print(f"Fehler beim Erstellen der Tabelle: {e}")
     finally:
