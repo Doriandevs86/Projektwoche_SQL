@@ -25,7 +25,7 @@ def extra_info():
                                            ' Beispiel Datum; Album; Interpret\n'
                                            '\n'
                                            '################################')
-    infofenster.grid(row=1, column=3)
+    infofenster.grid(row=7, column=0)
 
 def check_extras_input(event):
     if hasattr(check_extras_input, "error_label"): # entfernt die fehlermeldung
@@ -52,7 +52,7 @@ def update_interpreten(selected_genre, selected_subgenre):
 
 
 ### Hauptfenster ###
-ctk.set_appearance_mode("")
+ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("./config/theme/custom.json")
 root = ctk.CTk()
 root.title('Meine Musik Empfehlung')
@@ -94,6 +94,7 @@ interpret_dropdown.grid(column=0, row=0, padx=20, pady=10)
 
 extra_header = ctk.CTkLabel(root, text="Extra Infos: Y/N", bg_color="gray")
 extra_header.grid(column=0, row=1)
+
 # Eingabefeld für "Extras Y/N" erstellen
 extras_ver = ctk.StringVar(value="")
 extras_entry = ctk.CTkEntry(root, textvariable=extras_ver, placeholder_text='Hallo Welt', placeholder_text_color="gray" , width=140)
