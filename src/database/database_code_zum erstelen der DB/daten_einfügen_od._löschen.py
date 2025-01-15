@@ -22,7 +22,6 @@ def create_playlist_table():
     connection = get_db_connection()
     try:
         with connection.cursor() as cursor:
-            # SQL zum Erstellen der Tabelle, falls sie noch nicht existiert
             cursor.execute("""
                 CREATE TABLE IF NOT EXISTS Meine_Playlist (
                     id SERIAL PRIMARY KEY,
@@ -44,7 +43,6 @@ def add_to_playlist():
     connection = get_db_connection()
     try:
         with connection.cursor() as cursor:
-            # Daten in die Tabelle einfügen
             cursor.execute("""
                 INSERT INTO Meine_Playlist (title_name, artist_name) 
                 VALUES (%s, %s);
