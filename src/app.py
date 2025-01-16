@@ -1,6 +1,10 @@
 import customtkinter as ctk
 from PIL import Image
-from dropdown_funktionen import connect_to_db, get_genres_from_db, get_subgenres_from_db, get_interpreten_from_db
+from dropdown_funktionen import (connect_to_db,
+                                get_genres_from_db,
+                                get_subgenres_from_db,
+                                get_interpreten_from_db
+                                )
 
 # Verbindung einmalig herstellen
 connection = connect_to_db()
@@ -25,7 +29,8 @@ def extra_info():
                                            ' Beispiel Datum; Album; Interpret\n'
                                            '\n'
                                            '################################')
-    infofenster.grid(row=7, column=0)
+    infofenster.grid(row=7, column=0, columnspan= 3)
+
 
 def check_extras_input(event):
     if hasattr(check_extras_input, "error_label"): # entfernt die fehlermeldung
@@ -41,14 +46,20 @@ def check_extras_input(event):
         check_extras_input.error_label = ctk.CTkLabel(root, text="Ungültige Eingabe! Bitte nur 'Y' oder 'N' eingeben.", text_color="red")
         check_extras_input.error_label.grid(row=3, column=0, columnspan=3)
 
+
 # Abhängigkeiten der Dropdowns
 def update_subgenres(selected_genre):
     subgenres = get_subgenres_from_db(connection=connection, genre=selected_genre)
     sub_genre_dropdown.configure(values=subgenres)
 
+    interpret_dropdown.configure(values=[])
+    interpret_ver.set("Interpret")
+
 def update_interpreten(selected_genre, selected_subgenre):
     interpreten = get_interpreten_from_db(connection=connection, genre=selected_genre, subgenre=selected_subgenre)
     interpret_dropdown.configure(values=interpreten)
+
+
 
 
 ### Hauptfenster ###
@@ -86,12 +97,7 @@ interpret_ver = ctk.StringVar(value="Interpret")
 interpret_dropdown = ctk.CTkOptionMenu(root, variable=interpret_ver, values=[])
 interpret_dropdown.grid(column=0, row=0, padx=20, pady=10)
 
-# # Extras Dropdown
-# extras_ver = ctk.StringVar(value="Extras")
-# extras = ["ja", "Nein"]
-# extras_dropdown = ctk.CTkOptionMenu(root, variable=extras_ver, values=extras, bg_color="transparent")
-# extras_dropdown.grid(column=1, row=1, padx=20, pady=10)
-
+# Extras_Header
 extra_header = ctk.CTkLabel(root, text="Extra Infos: Y/N", bg_color="gray")
 extra_header.grid(column=0, row=1)
 

@@ -15,7 +15,7 @@ ALTER TABLE rating ADD CONSTRAINT pk_rating PRIMARY KEY (title_id);
 ALTER TABLE title
     ADD CONSTRAINT fk_title_artist FOREIGN KEY (artist_id) REFERENCES artist(artist_id),
     ADD CONSTRAINT fk_title_genre FOREIGN KEY (genre_id) REFERENCES genre(genre_id),
-    ADD CONSTRAINT fk_title_title FOREIGN KEY (title_id) REFERENCES additional_information(title_id);
+    ADD CONSTRAINT fk_title FOREIGN KEY (title_id) REFERENCES additional_information(title_id);
 
  ALTER TABLE rating
       ADD CONSTRAINT fk_rating_title FOREIGN KEY (title_id) REFERENCES title(title_id);

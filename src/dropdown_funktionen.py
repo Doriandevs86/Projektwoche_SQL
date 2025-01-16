@@ -3,7 +3,7 @@ import os
 from flask.cli import load_dotenv
 
 
-load_dotenv(r'C:\Users\Admin\Documents\Projektwoche_SQL\Projektwoche_SQL\.env')
+load_dotenv(r'C:\Users\Admin\Desktop\Projektwoche_SQL\.env')
 
 # check_in:
 def connect_to_db():
@@ -58,16 +58,19 @@ def get_subgenres_from_db(connection, genre):
 def get_interpreten_from_db(connection, genre, subgenre):
     try:
         with connection.cursor() as cursor:
-            # Abfrage der Interpreten basierend auf Genre und Subgenre
+            # Abfrage aller Interpreten, die nicht im ausgewählten Genre und Subgenre vorkommen
             cursor.execute('''
                 SELECT DISTINCT a.name
                 FROM "artist" a
-                INNER JOIN "title" t ON artist_id = t.artist_id
-                INNER JOIN "genre" g ON t.genre_id = genre_id
-                WHERE g.genre = %s AND g.subgenre = %s;
+                WHERE a.artist_id NOT IN (
+                    SELECT t.artist_id
+                    FROM "title" t
+                    INNER JOIN "genre" g ON t.genre_id = g.genre_id
+                    WHERE g.genre = %s AND g.subgenre = %s
+                );
             ''', (genre, subgenre))
             rows = cursor.fetchall()
             return [f"{row[0]}" for row in rows]
     except Exception as e:
-        print(f"Fehler beim Abrufen oder Verarbeiten der Interpreten: {e}")
+        print(f"Fehler beim Abrufen oder Verarbeiten der nicht-assoziierten Interpreten: {e}")
         return []
