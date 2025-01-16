@@ -26,7 +26,7 @@ def extra_info():
                                            'Hier stehen deine 5 Musikextras \n'
                                            '\n'
                                            '\n'
-                                           ' Beispiel Datum; Album; Interpret\n'
+                                           ' Bsp. Release_Date, Top_Album, Rating\n'
                                            '\n'
                                            '################################')
     infofenster.grid(row=7, column=0, columnspan= 3)
